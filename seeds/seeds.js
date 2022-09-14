@@ -1,6 +1,6 @@
 require("dotenv/config");
 require("../db/index");
-const User = require("../models/User.model");
+const User = require("../models/user.model");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Eatery = require("../models/eatery.model");
@@ -49,9 +49,6 @@ const usersSeed = [
 (async function () {
   await Eatery.deleteMany();
   await User.deleteMany();
-  
   const users = await User.create(usersSeed);
-
-  console.log(users);
   process.exit();
 })();
