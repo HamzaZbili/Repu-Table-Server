@@ -1,31 +1,23 @@
 const { Schema, model } = require("mongoose");
-const validateEmail = require("../utils/validateEmail")
-const listOfCuisines = require("./model data/listOfCuisines")
 
 const eaterySchema = new Schema(
   {
-    name: String,
+    businessName: String,
     address: {
         type: String,
         required: true
     },
-    cuisine: {
-        type: String,
-        enum: listOfCuisines,
-        required: true
-    },
-    cuisine2: {
-        type: String,
-        enum: listOfCuisines
-    },
-    cuisine3: {
-        type: String,
-        enum: listOfCuisines
-    },
+    cuisine: [String],
     priceGuide: {
         type: Number,
         min: 0,
         max: 5
+    },
+    desription: String,
+    photo: {
+        width: String,
+        url: String,
+        height: String
     },
     isReputable: {
         type: Boolean,
@@ -37,22 +29,18 @@ const eaterySchema = new Schema(
         required: true,
         ref: "User",
       },
+    manager: [{
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    }],
     website: {
         type: String,
         required: true,
       },
         // unsure if will keep in
-        // email: {
-        //     type: String,
-        //     trim: true,
-        //     lowercase: true,
-        // unique: true,
-        // required: true,
-        // validate: [validateEmail, 'Please fill a valid email address'],
-        // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-    //   },
-    areaCode: Schema.Types.Number,
-    phoneNumber: Schema.Types.Number,
+    email: String,
+    phoneNumber: Schema.Types.String,
     },
     { timestamps: true },
 );
