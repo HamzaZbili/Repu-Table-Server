@@ -29,9 +29,6 @@ router.post("/reviews/:id", isAuth, async (req, res, next) => {
         const eatery = req.params.id;
         const {rating, content} = req.body;
         const currentTime = new Date();
-            console.log({
-                author: author,
-                eatery: eatery})
         const recentlyReviewed = await Review.findOne({
             author: author,
             eatery: eatery},

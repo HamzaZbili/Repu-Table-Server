@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Eatery = require('../../models/eatery.model')
 const isAuth = require("../../middleware/isauth")
 
-router.get("/my", isAuth, async (req, res, next) => {
+router.get("/my/all", isAuth, async (req, res, next) => {
   try {
     const eateries = await Eatery.find({owner: req.user.id});
     res.status(200).json(eateries);

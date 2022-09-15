@@ -26,7 +26,7 @@ app.use("/auth", authRoutes);
 app.use("/mod/users", userAdmin);
 app.use("/mod/eateries", eateryAdmin);
 
-app.use("/eateries", eateriesUser,eateriesOwner)
+app.use("/eateries", eateriesUser, eateriesOwner);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
