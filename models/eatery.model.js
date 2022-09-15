@@ -19,9 +19,12 @@ const eaterySchema = new Schema(
         url: String,
         height: String
     },
+    proofOfLivingWage: String,
+    declaration: Boolean,
     isReputable: {
-        type: Boolean,
-        default: false
+        type: String,
+        enum: ['pending', 'review', 'false', 'repu-table'],
+        default: 'false'
     },
     // eatery must be posted by user
     owner: {

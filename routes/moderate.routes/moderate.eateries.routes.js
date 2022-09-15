@@ -1,12 +1,28 @@
 const router = require('express').Router()
-const bcrypt = require('bcrypt')
-const jsonWebToken = require('jsonwebtoken')
-const salt = 10
-// const isAuth = require(".././middleware/isAdmin.js")
+const Eatery = require("../../models/eatery.model")
+const isMod = require("../../middleware/isMod.js");
 
-router.get("/", (req, res, next) => {
-    res.json("All good here");
+router.get("/", isMod, async (req, res, next) => {
+  try {
+    const allEateries = await Eatery.find();
+    res.status(200).json(allEateries);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
   });
+
+  router.get("/pending", isMod, async (req, res, next) => {
+    try {
+      const allEateries = await Eatery.find({isReputable: "pending"});
+      res.status(200).json(allEateries);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+    });
+
+  
+
+
   
   
   module.exports = router;
