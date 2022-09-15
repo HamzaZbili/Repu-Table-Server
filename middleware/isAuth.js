@@ -1,5 +1,5 @@
 const jsonWebToken = require("jsonwebtoken");
-const User = require("../models/User.model");
+const User = require("../models/user.model");
 
 const isAuth = async (req, res, next) => {
   try {
@@ -15,7 +15,6 @@ const isAuth = async (req, res, next) => {
     }
     req.user = user;
     // try to check role with existing auth route - if not, make new one
-    console.log(user.role)
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
   }
