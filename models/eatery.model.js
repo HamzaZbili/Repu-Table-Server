@@ -26,7 +26,7 @@ const eaterySchema = new Schema(
         enum: ['pending', 'review', 'false', 'repu-table'],
         default: 'false'
     },
-    // eatery must be posted by user
+    // eatery must be posted by owner
     owner: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -41,9 +41,12 @@ const eaterySchema = new Schema(
         type: String,
         required: true,
       },
-        // unsure if will keep in
     email: String,
     phoneNumber: Schema.Types.String,
+    createdAt: {
+        type: Date,
+        immutable: true
+      },
     },
     { timestamps: true },
 );
