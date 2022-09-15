@@ -31,7 +31,10 @@ router.get("/:id", isMod, async (req,res,next) => {
 
 router.patch("/:id", isMod, async (req,res,next) => {
   try {
-    const eatery = await Eatery.findOneAndUpdate({isReputable: 'repu-table'})
+    const {applicationOutcome} = req.body
+    console.log(applicationOutcome)
+    const eatery = await Eatery.findOneAndUpdate({isReputable: applicationOutcome},
+      {new: true})
     res.status(200).json(eatery);
   } catch (error) {
     res.status(400).send(error.message);

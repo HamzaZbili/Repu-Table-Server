@@ -20,7 +20,10 @@ const eaterySchema = new Schema(
         height: String
     },
     proofOfLivingWage: String,
-    declaration: Boolean,
+    hasSignedDeclaration: {
+        type: Boolean,
+        default: false
+    },
     isReputable: {
         type: String,
         enum: ['pending', 'review', 'false', 'repu-table'],

@@ -23,21 +23,25 @@ router.get("/:id", async (req, res, next) => {
     }
 })
 
-router.post("/:id", isAuth, async (req, res, next) => {
+router.post("/reviews/:id", isAuth, async (req, res, next) => {
     try {
         const author = req.user.id;
         const eatery = req.params.id;
         const {rating, content} = req.body;
         const currentTime = new Date();
+            console.log({
+                author: author,
+                eatery: eatery})
         const recentlyReviewed = await Review.findOne({
             author: author,
             eatery: eatery},
             ).sort({createdAt: -1})
-        console.log(recentlyReviewed)
-        const timeSinceLastReviewedInMinutes = (recentlyReviewed.createdAt - currentTime) / (1000 * 60);
-        if (timeSinceLastReviewedInMinutes < 1) {
-            res.status(403).send("You have recently posted a review for this eatery");
-            return
+        if (recentlyReviewed){
+            const timeSinceLastReviewedInMinutes = (currentTime - recentlyReviewed.createdAt) / (1000 * 60);
+            if (timeSinceLastReviewedInMinutes < 1) {
+                res.status(403).json({message: "You have recently posted a review for this eatery"})
+                return
+            }
         }
         const newReview = await Review.create({
             author: req.user.id,

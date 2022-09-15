@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Eatery = require('../../models/eatery.model')
 const isAuth = require("../../middleware/isauth")
 
-router.get("/", isAuth, async (req, res, next) => {
+router.get("/my", isAuth, async (req, res, next) => {
   try {
     const eateries = await Eatery.find({owner: req.user.id});
     res.status(200).json(eateries);
@@ -11,7 +11,7 @@ router.get("/", isAuth, async (req, res, next) => {
   }
 });
 
-router.get("/:id", isAuth, async (req, res, next) => {
+router.get("/my/:id", isAuth, async (req, res, next) => {
   try {
     const eateries = await Eatery.findOne(
       {owner: req.user.id,
@@ -23,7 +23,7 @@ router.get("/:id", isAuth, async (req, res, next) => {
 });
 
 
-router.patch("/:id", isAuth, async (req, res, next) => {
+router.patch("/my/:id", isAuth, async (req, res, next) => {
   try {
     const {proofOfLivingWage }= req.body
     const eatery = await Eatery.findOneAndUpdate(

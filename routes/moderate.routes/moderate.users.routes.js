@@ -5,7 +5,7 @@ const isMod = require("../../middleware/isMod.js");
 // lists all users on website - must be moderator
 router.get("/", isMod ,async (req, res, next) => {
   try {
-    const allUsers = await Users.find();
+    const allUsers = await User.find();
     res.status(200).json(allUsers);
   } catch (error) {
     res.status(400).send(error.message);
