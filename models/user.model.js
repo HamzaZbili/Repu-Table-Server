@@ -24,7 +24,7 @@ const userSchema = new Schema(
   },
   role: {
       type: Schema.Types.String,
-      enum: ["admin", "user"],
+      enum: ["moderator", "user"],
       default: "user",
       required: true
     },

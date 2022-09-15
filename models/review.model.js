@@ -20,7 +20,6 @@ const reviewSchema = new Schema(
     },
     content: {
         type: String,
-        required: true,
         maxLength: 400
     }
   }, {timestamps: true}
