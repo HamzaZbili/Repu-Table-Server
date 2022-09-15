@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const Eatery = require('../models/eatery.model')
-const isAuth = require("../middleware/isAuth")
+const Eatery = require('../../models/eatery.model')
+const isAuth = require("../../middleware/isAuth")
 
 router.get("/", isAuth, async (req, res, next) => {
   try {
@@ -23,7 +23,8 @@ router.get("/:id", isAuth, async (req, res, next) => {
 });
 
 
-router.patch("/:id", isAuth, async (req,res, next) => {
+router.patch("/:id", isAuth, async (req, res, next) => {
+  console.log("test")
   try {
     const {proofOfLivingWage }= req.body
     const eatery = await Eatery.findOneAndUpdate(

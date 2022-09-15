@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Users = require("../../models/user.model")
+const User = require("../../models/user.model")
 const isMod = require("../../middleware/isMod.js");
 
 // lists all users on website - must be moderator
