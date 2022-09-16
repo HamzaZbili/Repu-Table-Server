@@ -20,8 +20,8 @@ const eateriesUser = require("./routes/user.routes/user.routes")
 
 
 // 👇 Start handling routes here
-app.use("/", allRoutes);
-app.use("/auth", authRoutes);
+app.use("", allRoutes);
+app.use("/api/auth", authRoutes);
 
 app.use("/mod/users", userAdmin);
 app.use("/mod/eateries", eateryAdmin);
