@@ -14,11 +14,7 @@ const eaterySchema = new Schema(
         max: 5
     },
     desription: String,
-    photo: {
-        width: String,
-        url: String,
-        height: String
-    },
+    photo: String,
     proofOfLivingWage: String,
     hasSignedDeclaration: {
         type: Boolean,
@@ -50,6 +46,7 @@ const eaterySchema = new Schema(
         type: Date,
         immutable: true
       },
+    moderatorNotes: String,
     },
     { timestamps: true },
 );

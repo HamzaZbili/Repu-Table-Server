@@ -49,7 +49,7 @@ const findRestaurants = async () => {
           return cuisine.name;
         }),
         description: description,
-        photo: photo.images.medium,
+        photo: photo.images.medium.url,
         email: email,
         website: website,
         phoneNumber: phone,
