@@ -3,6 +3,7 @@ const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 const jsonWebToken = require('jsonwebtoken')
 const salt = 10
+const isAuthenticated = require('../middleware/isAuth')
 
 router.post('/signup', async (req, res, next) => {
   const { username, email, password, phoneNumber } = req.body
@@ -62,6 +63,11 @@ router.post('/login', async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+})
+
+router.get("/me", isAuthenticated, (req, res, next) => {
+	// console.log("req payload", req.payload);
+	res.status(200).json(req.payload)
 })
 
 module.exports = router
