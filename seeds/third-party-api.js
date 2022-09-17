@@ -38,7 +38,8 @@ const findRestaurants = async () => {
         !address ||
         !website ||
         !phone ||
-        !photo.images.medium
+        !photo.images.medium ||
+        !description
       ) {
         return;
       }

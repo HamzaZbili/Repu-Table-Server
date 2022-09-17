@@ -4,6 +4,7 @@ const User = require("../models/user.model");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Eatery = require("../models/eatery.model");
+const Review = require("../models/review.model")
 const salt = 10;
 let password = "password";
 const generatedSalt = bcrypt.genSaltSync(salt);
@@ -114,6 +115,7 @@ const usersSeed = [
 ];
 
 (async function () {
+  await Review.deleteMany();
   await Eatery.deleteMany();
   await User.deleteMany();
   const users = await User.create(usersSeed);

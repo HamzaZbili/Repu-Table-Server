@@ -13,7 +13,7 @@ const eaterySchema = new Schema(
         min: 0,
         max: 5
     },
-    desription: String,
+    description: String,
     photo: String,
     proofOfLivingWage: String,
     hasSignedDeclaration: {

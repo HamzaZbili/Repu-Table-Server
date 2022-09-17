@@ -50,6 +50,17 @@ router.patch("/:id", isMod, async (req,res,next) => {
   }
 })
 
+// allows moderator to remove eatery from database
+router.delete("/:id", isMod, async (req,res,next) => {
+  console.log('test')
+  try {
+    const eatery = await Eatery.findByIdAndDelete(req.params.id)
+    res.status(204).json({message: "deletion successful"});
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+})
+
   
 
 
