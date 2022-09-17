@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const User = require("../../models/user.model")
-const isMod = require("../../middleware/isMod.js");
+const isSuper = require("../../middleware/isSuper.js");
 
 // lists all users on website - must be moderator
-router.get("/", isMod ,async (req, res, next) => {
+router.get("/", isSuper ,async (req, res, next) => {
   try {
     const allUsers = await User.find();
     res.status(200).json(allUsers);
@@ -13,7 +13,7 @@ router.get("/", isMod ,async (req, res, next) => {
   });
 
 //selects one user based on ID - must be website moderator
-router.get("/:id", isMod, async(req,res,next) => {
+router.get("/:id", isSuper, async(req,res,next) => {
   try {
     const user = await User.findById(req.params.id)
     res.status(200).json(user);
@@ -22,7 +22,7 @@ router.get("/:id", isMod, async(req,res,next) => {
   }
 })
 
-router.patch("/:id", isMod, async(req,res,next) => {
+router.patch("/:id", isSuper, async(req,res,next) => {
   try {
     const user = await User.findOneAndUpdate(
       { _id: req.params.id},
@@ -34,7 +34,7 @@ router.patch("/:id", isMod, async(req,res,next) => {
   }
 })
 
-router.delete("/:id", isMod, async(req,res,next) => {
+router.delete("/:id", isSuper, async(req,res,next) => {
   try {
     const user = await User.findOneAndDelete({ _id: req.params.id})
     res.status(200).json(user);

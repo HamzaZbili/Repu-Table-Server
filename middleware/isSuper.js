@@ -1,7 +1,7 @@
 const jsonWebToken = require("jsonwebtoken");
 const User = require("../models/user.model");
 
-const isMod = async (req, res, next) => {
+const isSuper = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
     if (!token) {
@@ -10,8 +10,8 @@ const isMod = async (req, res, next) => {
     token = token.replace("Bearer ", "");
     const userToken = jsonWebToken.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findOne({ username: userToken.username })
-    if (user.role === "user") {
-      return res.status(400).json({ message: "must be a moderator to proceed" });
+    if (user.role !== "super") {
+      return res.status(400).json({ message: "must be a super to proceed" });
     }
     req.user = user;
     // try to check role with existing auth route - if not, make new one
@@ -22,4 +22,4 @@ const isMod = async (req, res, next) => {
 };
 
 
-module.exports = isMod;
+module.exports = isSuper;
