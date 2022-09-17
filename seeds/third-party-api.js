@@ -30,7 +30,7 @@ const findRestaurants = async () => {
   try {
     const response = await axios.request(config);
     response.data.data.forEach(async (eatery) => {
-      const { name, address, website, phone, cuisine, description, email, photo} = eatery;
+      const { name, address, website, phone, cuisine, description, email, photo, rating} = eatery;
       if (
         !cuisine ||
         !cuisine.length ||
@@ -39,16 +39,19 @@ const findRestaurants = async () => {
         !website ||
         !phone ||
         !photo.images.medium ||
-        !description
+        !description ||
+        !rating
       ) {
         return;
       }
+      console.log(response.data.data[0])
       const newEatery = {
         businessName: name,
         address: address,
         cuisine: cuisine.map(({key, ...cuisine}) => {
           return cuisine.name;
         }),
+        rating: rating,
         description: description,
         photo: photo.images.medium.url,
         email: email,

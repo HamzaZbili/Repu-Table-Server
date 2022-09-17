@@ -13,6 +13,7 @@ const eaterySchema = new Schema(
         min: 0,
         max: 5
     },
+    rating: Number,
     description: String,
     photo: String,
     proofOfLivingWage: String,
