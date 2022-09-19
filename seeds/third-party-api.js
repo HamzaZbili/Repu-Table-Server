@@ -17,10 +17,16 @@ const findRestaurants = async () => {
     method: "GET",
     url: travelAdvisorURL,
     params: {
+      // Soho
       bl_latitude: "51.511704",
       tr_latitude: "51.513927",
       bl_longitude: "-0.134615",
       tr_longitude: "-0.127319",
+      //Westminster
+      // bl_latitude: "51.501475",
+      // tr_latitude: "51.507967",
+      // bl_longitude: "-0.140820",
+      // tr_longitude: "-0.122839"
     },
     headers: {
       "X-RapidAPI-Key": APIKey,

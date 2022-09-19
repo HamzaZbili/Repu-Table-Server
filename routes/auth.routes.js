@@ -67,7 +67,7 @@ router.post('/login', async (req, res, next) => {
 
 router.get("/me", isAuthenticated, (req, res, next) => {
 	// console.log("req payload", req.payload);
-	res.status(200).json(req.payload)
+	res.status(200).json(req.user)
 })
 
 module.exports = router

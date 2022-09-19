@@ -47,6 +47,7 @@ const eaterySchema = new Schema(
         type: Date,
         immutable: true
       },
+    noteToUs: String,
     moderatorNotes: String,
     },
     { timestamps: true },

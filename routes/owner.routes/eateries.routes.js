@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Eatery = require('../../models/eatery.model')
 const isAuth = require("../../middleware/isauth")
+const fileUploader = require('../../config/cloudinary.config')
 
 // owner views all their restaurants
 router.get("/my/all", isAuth, async (req, res, next) => {
@@ -25,14 +26,15 @@ router.get("/my/:id", isAuth, async (req, res, next) => {
 });
 
 //sends application to beome a repu-table
-router.patch("/my/:id", isAuth, async (req, res, next) => {
+router.patch("/my/:id", isAuth, fileUploader.single('proofOfLivingWage'), async (req, res, next) => {
   try {
-    const {proofOfLivingWage }= req.body
+    const { noteToUs, declaration }= req.body
     const eatery = await Eatery.findOneAndUpdate(
       {owner: req.user.id,
        _id: req.params.id},
-       {proofOfLivingWage: proofOfLivingWage,
-        declaration: true,
+       {proofOfLivingWage: req.file.path,
+        noteToUs: noteToUs,
+        declaration: declaration,
         isReputable: 'pending'},
        {new: true});
     res.status(200).json(eatery);
