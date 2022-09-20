@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const Eatery = require('../../models/eatery.model')
-const isAuth = require("../../middleware/isauth")
-const fileUploader = require('../../config/cloudinary.config')
+const Eatery = require("../../models/eatery.model");
+const isAuth = require("../../middleware/isauth");
+const fileUploader = require("../../config/cloudinary.config");
 
 // owner views all their restaurants
 router.get("/my/all", isAuth, async (req, res, next) => {
   try {
-    const eateries = await Eatery.find({owner: req.user.id});
+    const eateries = await Eatery.find({ owner: req.user.id });
     res.status(200).json(eateries);
   } catch (error) {
     res.status(400).send(error.message);
@@ -16,9 +16,10 @@ router.get("/my/all", isAuth, async (req, res, next) => {
 // owner views single restaurant
 router.get("/my/:id", isAuth, async (req, res, next) => {
   try {
-    const eateries = await Eatery.findOne(
-      {owner: req.user.id,
-       _id: req.params.id});
+    const eateries = await Eatery.findOne({
+      owner: req.user.id,
+      _id: req.params.id,
+    });
     res.status(200).json(eateries);
   } catch (error) {
     res.status(400).send(error.message);
@@ -26,27 +27,37 @@ router.get("/my/:id", isAuth, async (req, res, next) => {
 });
 
 //sends application to beome a repu-table
-router.patch("/my/:id", isAuth, fileUploader.single('proofOfLivingWage'), async (req, res, next) => {
-  try {
-    const { noteToUs, declaration }= req.body
-    const eatery = await Eatery.findOneAndUpdate(
-      {owner: req.user.id,
-       _id: req.params.id},
-       {proofOfLivingWage: req.body.proofOfLivingWage,
-        noteToUs: noteToUs,
-        declaration: declaration,
-        isReputable: 'pending'},
-       {new: true});
-    console.log('file name', req.file)
-    res.status(200).json(req.body.proofOfLivingWage);
-  } catch (error) {
-    res.status(400).send(error.message);
+router.patch(
+  "/my/:id",
+  isAuth,
+  fileUploader.single("image"),
+  async (req, res, next) => {
+    try {
+      const { noteToUs } = req.body;
+      console.log("file", req.file);
+      console.log("filepath", req.file.path);
+
+      const eatery = await Eatery.findOneAndUpdate(
+        { owner: req.user.id, _id: req.params.id },
+        {
+          proofOfLivingWage: req.file.path,
+          noteToUs: noteToUs,
+          isReputable: "pending",
+        },
+        { new: true }
+      );
+
+      res.status(200).json(eatery);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
   }
-})
+);
 
 // owner posts new restaurant with form
 router.post("/my/new", isAuth, async (req, res, next) => {
-  const {businessName,
+  const {
+    businessName,
     cuisine,
     priceGuide,
     description,
@@ -54,32 +65,34 @@ router.post("/my/new", isAuth, async (req, res, next) => {
     photo,
     website,
     email,
-    phoneNumber} = req.body
+    phoneNumber,
+  } = req.body;
   try {
     const newEatery = await Eatery.create({
-    businessName: businessName,
-    address: address,
-    cuisine: cuisine,
-    priceGuide: priceGuide,
-    owner: req.user.id,
-    description: description,
-    photo: photo,
-    website: website,
-    email: email,
-    phoneNumber: phoneNumber
-    })
+      businessName: businessName,
+      address: address,
+      cuisine: cuisine,
+      priceGuide: priceGuide,
+      owner: req.user.id,
+      description: description,
+      photo: photo,
+      website: website,
+      email: email,
+      phoneNumber: phoneNumber,
+    });
     res.status(201).json(newEatery);
   } catch (error) {
     res.status(400).send(error.message);
   }
-})
+});
 
 // owner views all their applications to be reviewed
 router.get("/my/all/applications", isAuth, async (req, res, next) => {
   try {
-    const eateries = await Eatery.find(
-      {owner: req.user.id,
-        isReputable: "review"});
+    const eateries = await Eatery.find({
+      owner: req.user.id,
+      isReputable: "review",
+    });
     res.status(200).json(eateries);
   } catch (error) {
     res.status(400).send(error.message);
