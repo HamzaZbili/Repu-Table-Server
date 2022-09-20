@@ -49,7 +49,7 @@ router.post('/login', async (req, res, next) => {
     if (!foundUser) {
       return res.status(400).json({ message: 'wrong credentials' })
     }
-    const matchingPassword = bcrypt.compare(password, foundUser.password)
+    const matchingPassword = bcrypt.compareSync(password, foundUser.password)
     if (!matchingPassword) {
       return res.status(400).json({ message: 'wrong credentials' })
     }
@@ -61,7 +61,7 @@ router.post('/login', async (req, res, next) => {
 
     res.status(200).json({ token })
   } catch (error) {
-    next(error)
+    res.status(400).send(error.message)
   }
 })
 

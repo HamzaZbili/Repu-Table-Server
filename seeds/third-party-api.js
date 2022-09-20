@@ -64,8 +64,9 @@ const findRestaurants = async () => {
         website: website,
         phoneNumber: phone,
       };
-      const allUsers = await User.find()
-      newEatery.owner = await getRandomId(allUsers)
+      const eateryAccounts = await User.find({role: 'eateryAccount'})
+      // console.log(eateryAccounts)
+      newEatery.owner = await getRandomId(eateryAccounts)
       const seededEateries = await Eatery.create(newEatery);
       console.log(seededEateries)
     });

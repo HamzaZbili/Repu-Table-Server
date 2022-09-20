@@ -32,12 +32,13 @@ router.patch("/my/:id", isAuth, fileUploader.single('proofOfLivingWage'), async 
     const eatery = await Eatery.findOneAndUpdate(
       {owner: req.user.id,
        _id: req.params.id},
-       {proofOfLivingWage: req.file.path,
+       {proofOfLivingWage: req.body.proofOfLivingWage,
         noteToUs: noteToUs,
         declaration: declaration,
         isReputable: 'pending'},
        {new: true});
-    res.status(200).json(eatery);
+    console.log('file name', req.file)
+    res.status(200).json(req.body.proofOfLivingWage);
   } catch (error) {
     res.status(400).send(error.message);
   }

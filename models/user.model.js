@@ -24,7 +24,7 @@ const userSchema = new Schema(
   },
   role: {
       type: Schema.Types.String,
-      enum: ["super", "moderator", "user"],
+      enum: ["super", "moderator", "user", "eateryAccount"],
       default: "user",
       required: true
     },

@@ -16,7 +16,7 @@ router.get("/", isMod, async (req, res, next) => {
   // mod route to view all pending applications
 router.get("/pending", isMod, async (req, res, next) => {
   try {
-    const allEateries = await Eatery.find({isReputable: "pending"});
+    const allEateries = await Eatery.find({isReputable: "pending"})
     res.status(200).json(allEateries);
   } catch (error) {
     res.status(400).send(error.message);

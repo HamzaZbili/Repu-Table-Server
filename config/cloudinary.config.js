@@ -1,3 +1,4 @@
+require("dotenv").config();
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
@@ -13,7 +14,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     allowed_formats: ['jpg', 'png'],
-    folder: 'movie-project' // The name of the folder in cloudinary
+    folder: '/repu-table' // The name of the folder in cloudinary
     // resource_type: 'raw' => this is in case you want to upload other type of files, not just images
   }
 });
