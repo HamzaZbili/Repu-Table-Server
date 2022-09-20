@@ -12,7 +12,7 @@ const userSchema = new Schema(
       require: true,
       select: false,
     },
-    number: Number,
+    phoneNumber: Number,
     email: {
       type: String,
       trim: true,
