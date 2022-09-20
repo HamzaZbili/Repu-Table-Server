@@ -101,7 +101,7 @@ router.get("/my/all/applications", isAuth, async (req, res, next) => {
 
 router.delete("/my/delete/:id", isAuth, async (req, res, next) => {
   try {
-    const deleteEatery = await Eatery.findByIdAndDelete(req.params._id);
+    const deleteEatery = await Eatery.findOneAndDelete({ _id: req.params.id });
     res.status(204).json(deleteEatery);
   } catch (error) {
     res.status(400).send(error.message);
