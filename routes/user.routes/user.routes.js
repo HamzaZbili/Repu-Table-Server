@@ -67,4 +67,13 @@ router.get("/reviews/:id", async (req, res, next) => {
   }
 });
 
+router.get("/reviews/my/:id", isAuth, async (req, res, next) => {
+  try {
+    const myReviews = await Review.find({ author: req.user.id });
+    res.status(200).json(myReviews);
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+});
+
 module.exports = router;
