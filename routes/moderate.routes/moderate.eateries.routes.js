@@ -39,7 +39,7 @@ router.get("/:id", isMod, async (req, res, next) => {
 router.patch("/:id", isMod, async (req, res, next) => {
   try {
     const { applicationOutcome, moderatorNotes } = req.body;
-    console.log(applicationOutcome);
+    // console.log(applicationOutcome);
     const eatery = await Eatery.findOneAndUpdate(
       { _id: req.params.id },
       { isReputable: applicationOutcome, moderatorNotes: moderatorNotes },

@@ -59,7 +59,6 @@ router.post("/my/new", isAuth, async (req, res, next) => {
   const {
     businessName,
     cuisine,
-    priceGuide,
     description,
     address,
     photo,
@@ -72,7 +71,6 @@ router.post("/my/new", isAuth, async (req, res, next) => {
       businessName: businessName,
       address: address,
       cuisine: cuisine,
-      priceGuide: priceGuide,
       owner: req.user.id,
       description: description,
       photo: photo,
