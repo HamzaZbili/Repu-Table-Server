@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Eatery = require("../../models/eatery.model");
 const isAuth = require("../../middleware/isauth");
 const fileUploader = require("../../config/cloudinary.config");
+const User = require("../../models/user.model");
 
 // owner views all their restaurants
 router.get("/my/all", isAuth, async (req, res, next) => {
@@ -78,7 +79,12 @@ router.post("/my/new", isAuth, async (req, res, next) => {
       email: email,
       phoneNumber: phoneNumber,
     });
-    res.status(201).json(newEatery);
+    const updateUserRole = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { role: "eateryAccount" },
+      { new: true }
+    );
+    res.status(201).json(newEatery, updateUserRole);
   } catch (error) {
     res.status(400).send(error.message);
   }
