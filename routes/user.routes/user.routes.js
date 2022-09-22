@@ -39,7 +39,8 @@ router.post("/reviews/:id", isAuth, async (req, res, next) => {
         (currentTime - recentlyReviewed.createdAt) / (1000 * 60);
       if (timeSinceLastReviewedInMinutes < 1) {
         res.status(403).json({
-          message: "You have recently posted a review for this eatery",
+          message:
+            "You have recently posted a review for this eatery, you must wait before you can post another one",
         });
         return;
       }
