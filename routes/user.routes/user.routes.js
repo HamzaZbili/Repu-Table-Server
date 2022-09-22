@@ -33,8 +33,10 @@ router.post("/reviews/:id", isAuth, async (req, res, next) => {
     const recentlyReviewed = await Review.findOne({
       author: author,
       eatery: eatery,
-    });
+      created_at: -1,
+    }).sort({ createdAt: -1 });
     if (recentlyReviewed) {
+      console.log(recentlyReviewed);
       const timeSinceLastReviewedInMinutes =
         (currentTime - recentlyReviewed.createdAt) / (1000 * 60);
       if (timeSinceLastReviewedInMinutes < 1) {
