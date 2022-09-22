@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Eatery = require("../../models/eatery.model");
-const isAuth = require("../../middleware/isauth");
+const isAuth = require("../../middleware/isAuth");
 const fileUploader = require("../../config/cloudinary.config");
 const User = require("../../models/user.model");
 
@@ -84,7 +84,7 @@ router.post("/my/new", isAuth, async (req, res, next) => {
       { role: "eateryAccount" },
       { new: true }
     );
-    res.status(201).json(newEatery, updateUserRole);
+    res.status(201).json(updateUserRole);
   } catch (error) {
     res.status(400).send(error.message);
   }
