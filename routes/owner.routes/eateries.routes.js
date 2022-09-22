@@ -4,7 +4,7 @@ const isAuth = require("../../middleware/isAuth");
 const fileUploader = require("../../config/cloudinary.config");
 const User = require("../../models/user.model");
 
-// owner views all their restaurants
+// owner views all their restaurants :)
 router.get("/my/all", isAuth, async (req, res, next) => {
   try {
     const eateries = await Eatery.find({ owner: req.user.id });
