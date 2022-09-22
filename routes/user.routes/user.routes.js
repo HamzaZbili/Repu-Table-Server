@@ -33,7 +33,7 @@ router.post("/reviews/:id", isAuth, async (req, res, next) => {
     const recentlyReviewed = await Review.findOne({
       author: author,
       eatery: eatery,
-    }).sort({ createdAt: -1 });
+    });
     if (recentlyReviewed) {
       const timeSinceLastReviewedInMinutes =
         (currentTime - recentlyReviewed.createdAt) / (1000 * 60);
@@ -59,9 +59,9 @@ router.post("/reviews/:id", isAuth, async (req, res, next) => {
 
 router.get("/reviews/:id", async (req, res, next) => {
   try {
-    const findReviews = await Review.find({ eatery: req.params.id }).populate(
-      "author"
-    );
+    const findReviews = await Review.find({ eatery: req.params.id })
+      .populate("author")
+      .sort({ createdAt: -1 });
     res.status(200).json(findReviews);
   } catch (error) {
     res.status(400).send(error.message);
