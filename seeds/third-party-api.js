@@ -4,7 +4,7 @@ require("../db/index");
 const Eatery = require("../models/eatery.model");
 const User = require("../models/user.model");
 
-const getRandomId = require("../utils/getRandomId")
+const getRandomId = require("../utils/getRandomId");
 
 const travelAdvisorURL =
   "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary";
@@ -36,7 +36,16 @@ const findRestaurants = async () => {
   try {
     const response = await axios.request(config);
     response.data.data.forEach(async (eatery) => {
-      const { name, address, website, phone, cuisine, description, email, photo, rating} = eatery;
+      const {
+        name,
+        address,
+        website,
+        phone,
+        cuisine,
+        description,
+        email,
+        photo,
+      } = eatery;
       if (
         !cuisine ||
         !cuisine.length ||
@@ -45,36 +54,34 @@ const findRestaurants = async () => {
         !website ||
         !phone ||
         !photo.images.medium ||
-        !description ||
-        !rating
+        !description
       ) {
         return;
       }
-      console.log(response.data.data[0])
+      console.log(response.data.data[0]);
       const newEatery = {
         businessName: name,
         address: address,
-        cuisine: cuisine.map(({key, ...cuisine}) => {
+        cuisine: cuisine.map(({ key, ...cuisine }) => {
           return cuisine.name;
         }),
-        rating: rating,
         description: description,
         photo: photo.images.medium.url,
         email: email,
         website: website,
         phoneNumber: phone,
       };
-      const eateryAccounts = await User.find({role: 'eateryAccount'})
+      const eateryAccounts = await User.find({ role: "eateryAccount" });
       // console.log(eateryAccounts)
-      newEatery.owner = await getRandomId(eateryAccounts)
+      newEatery.owner = await getRandomId(eateryAccounts);
       const seededEateries = await Eatery.create(newEatery);
-      console.log(seededEateries)
+      console.log(seededEateries);
     });
   } catch (error) {
     console.error(error);
   }
 };
 
-findRestaurants()
+findRestaurants();
 
 module.exports = { findRestaurants };

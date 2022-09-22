@@ -68,6 +68,19 @@ router.get("/reviews/:id", async (req, res, next) => {
   }
 });
 
+router.patch("/reviews/update/:id/:average", async (req, res, next) => {
+  try {
+    const updateRating = await Eatery.findOneAndUpdate(
+      { eatery: req.params.id },
+      { rating: req.params.average },
+      { new: true }
+    );
+    res.status(200).json(updateRating);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
 router.get("/reviews/my/:id", isAuth, async (req, res, next) => {
   try {
     const myReviews = await Review.find({ author: req.user.id });
