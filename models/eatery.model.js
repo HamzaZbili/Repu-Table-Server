@@ -3,7 +3,10 @@ const validateEmail = require("../utils/validateEmail");
 
 const eaterySchema = new Schema(
   {
-    businessName: String,
+    businessName: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,

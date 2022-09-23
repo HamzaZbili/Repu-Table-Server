@@ -56,39 +56,43 @@ router.patch(
 );
 
 // owner posts new restaurant with form
-router.post("/my/new", isAuth, async (req, res, next) => {
-  const {
-    businessName,
-    cuisine,
-    description,
-    address,
-    photo,
-    website,
-    email,
-    phoneNumber,
-  } = req.body;
-  try {
-    const newEatery = await Eatery.create({
-      businessName: businessName,
-      address: address,
-      cuisine: cuisine,
-      owner: req.user.id,
-      description: description,
-      photo: photo,
-      website: website,
-      email: email,
-      phoneNumber: phoneNumber,
-    });
-    const updateUserRole = await User.findOneAndUpdate(
-      { _id: req.user.id },
-      { role: "eateryAccount" },
-      { new: true }
-    );
-    res.status(201).json(updateUserRole);
-  } catch (error) {
-    res.status(400).send(error.message);
+router.post(
+  "/my/new",
+  isAuth,
+  fileUploader.single("photo"),
+  async (req, res, next) => {
+    const {
+      businessName,
+      address,
+      cuisine,
+      description,
+      website,
+      email,
+      phoneNumber,
+    } = req.body;
+    try {
+      const newEatery = await Eatery.create({
+        businessName: businessName,
+        address: address,
+        cuisine: cuisine,
+        owner: req.user.id,
+        description: description,
+        photo: req.file.path,
+        website: website,
+        email: email,
+        phoneNumber: phoneNumber,
+      });
+      const updateUserRole = await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { role: "eateryAccount" },
+        { new: true }
+      );
+      res.status(201).json(updateUserRole);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
   }
-});
+);
 
 // owner views all their applications to be reviewed
 router.get("/my/all/applications", isAuth, async (req, res, next) => {
