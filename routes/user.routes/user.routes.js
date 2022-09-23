@@ -85,7 +85,9 @@ router.patch("/reviews/update/:id/:average", async (req, res, next) => {
 
 router.get("/reviews/my/:id", isAuth, async (req, res, next) => {
   try {
-    const myReviews = await Review.find({ author: req.user.id });
+    const myReviews = await Review.find({ author: req.user.id }).populate(
+      "author eatery"
+    );
     res.status(200).json(myReviews);
   } catch (error) {
     res.status(404).send(error.message);
