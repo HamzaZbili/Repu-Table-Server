@@ -5,7 +5,9 @@ const isAuth = require("../../middleware/isAuth");
 
 router.get("/", async (req, res, next) => {
   try {
-    const eateries = await Eatery.find({ isReputable: "repu-table" });
+    const eateries = await Eatery.find({ isReputable: "repu-table" }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(eateries);
   } catch (error) {
     res.status(400).send(error.message);
