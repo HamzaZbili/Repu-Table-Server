@@ -1,6 +1,6 @@
 <h2>REPU-TABLE BACKEND</h2>
 
-<p>Third and final solo project at Ironhack Paris. I built the front and back end of this full stack React application in 10 days.</p>
+<p>Third and final solo project at Ironhack Paris. I built the front and back end of this full stack React application in 10 days. The project was selected as the winner of the school Hackshow agaist all other projects in my cohort</p>
 
 <h4>Technologies</h4>
 <ul>
